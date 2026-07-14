@@ -5,6 +5,8 @@ loses money, with a world profit map and category-level drill-down.
 
 Stack: Tableau, calculated fields
 
+**Live dashboard →** https://public.tableau.com/app/profile/kenechukwu.ven.anyanwuocha/viz/GlobalSuperstoreProfitability_17840574172740/GlobalSuperstoreProfitability
+
 ![Dashboard](dashboard_mockup.png)
 
 ## What it does
