@@ -1,0 +1,47 @@
+============================================================
+ Global Superstore Profitability — Tableau calculated fields
+ Create each as a calculated field (Analysis > Create Calculated Field).
+============================================================
+
+--- Profit Ratio ---
+SUM([Profit]) / SUM([Sales])
+
+--- Avg Discount ---
+AVG([Discount])
+
+--- Average Order Value (AOV) ---
+SUM([Sales]) / COUNTD([OrderID])
+
+--- Profit per Order ---
+SUM([Profit]) / COUNTD([OrderID])
+
+--- Loss Flag  (for coloring loss vs profit) ---
+IF SUM([Profit]) < 0 THEN "Loss-making" ELSE "Profitable" END
+
+--- KPI Color  (traffic light on profit ratio) ---
+IF [Profit Ratio] >= 0.05 THEN "Healthy"
+ELSEIF [Profit Ratio] >= 0 THEN "Thin"
+ELSE "Loss" END
+
+--- Sales YoY %  (table calc; compute along Year) ---
+(SUM([Sales]) - LOOKUP(SUM([Sales]), -1)) / LOOKUP(SUM([Sales]), -1)
+
+--- Profit YoY %  (table calc; compute along Year) ---
+(SUM([Profit]) - LOOKUP(SUM([Profit]), -1)) / LOOKUP(SUM([Profit]), -1)
+
+--- Discount Band ---
+IF [Discount] = 0 THEN "0%"
+ELSEIF [Discount] <= 0.1 THEN "1-10%"
+ELSEIF [Discount] <= 0.2 THEN "11-20%"
+ELSE "20%+" END
+
+--- Order Year ---
+YEAR([OrderDate])
+
+--- Order Month ---
+DATETRUNC('month', [OrderDate])
+
+Notes
+- Map: drag Country to the view; Tableau geocodes it automatically (ISO3 is included as
+  a backup role). Set marks to filled map or symbol map; color by [Profit Ratio], size by Sales.
+- Use [Loss Flag] to quickly split profitable vs loss-making countries and categories.
